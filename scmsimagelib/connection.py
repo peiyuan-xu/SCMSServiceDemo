@@ -20,14 +20,17 @@ PIKA_CONN = None
 
 def init_client(server_ip):
     RABBITMQ_VHOST = "scms"
+    RABBITMQ_USER = "scms"
+    RABBITMQ_PWD = "scms"
 
     global _LOCK
     with _LOCK:
         global PIKA_CONN
         if not PIKA_CONN or not PIKA_CONN.is_open:
             try:
+                credentials = pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PWD)
                 PIKA_CONN = pika.BlockingConnection(pika.ConnectionParameters(
-                    host=server_ip, virtual_host=RABBITMQ_VHOST))
+                    host=server_ip, virtual_host=RABBITMQ_VHOST, credentials=credentials))
             except p_ex.AMQPConnectionError as e:
                 print(e.args)
 
