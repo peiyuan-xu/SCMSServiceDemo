@@ -6,10 +6,10 @@ server = {
 
 # Pecan Application Configurations
 app = {
-    'root': 'scmsdemo.controllers.root.RootController',
-    'modules': ['scmsdemo'],
+    'root': 'gwdemo.controllers.root.RootController',
+    'modules': ['gwdemo'],
     'static_root': '%(confdir)s/public',
-    'template_path': '%(confdir)s/scmsdemo/templates',
+    'template_path': '%(confdir)s/gwdemo/templates',
     'debug': True,
     'errors': {
         404: '/error/404',
@@ -20,7 +20,7 @@ app = {
 logging = {
     'root': {'level': 'INFO', 'handlers': ['console']},
     'loggers': {
-        'scmsdemo': {'level': 'DEBUG', 'handlers': ['console'], 'propagate': False},
+        'gwdemo': {'level': 'DEBUG', 'handlers': ['console'], 'propagate': False},
         'pecan': {'level': 'DEBUG', 'handlers': ['console'], 'propagate': False},
         'py.warnings': {'handlers': ['console']},
         '__force_dict__': True

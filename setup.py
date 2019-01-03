@@ -7,7 +7,7 @@ except ImportError:
     from setuptools import setup, find_packages
 
 setup(
-    name='scmsdemo',
+    name='gwdemo',
     version='0.1',
     description='',
     author='',
@@ -15,7 +15,7 @@ setup(
     install_requires=[
         "pecan",
     ],
-    test_suite='scmsdemo',
+    test_suite='gwdemo',
     zip_safe=False,
     include_package_data=True,
     packages=find_packages(exclude=['ez_setup'])

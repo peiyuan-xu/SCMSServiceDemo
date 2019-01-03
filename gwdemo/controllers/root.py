@@ -1,7 +1,7 @@
 from pecan import expose, redirect
 from webob.exc import status_map
 
-from scmsdemo.controllers.service_gateway import ServiceGatewayController
+from gwdemo.controllers.service_gateway import ServiceGatewayController
 
 
 class RootController(object):
