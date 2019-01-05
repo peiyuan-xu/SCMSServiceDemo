@@ -29,7 +29,7 @@ class ServiceGatewayController(object):
         # mock select the relative chain from db
         chain = 'chain2'
         next_service = 'books'
-        message = '{"method": "query_book", "parameter": "seller",' \
+        message = '{"method": "statistics_book", "parameter": "seller",' \
                   '"content": "seller statistics books"}'
         sender.send_message(message, chain, next_service)
 
