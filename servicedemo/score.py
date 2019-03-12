@@ -7,6 +7,7 @@
 @desc:
 """
 
+import ast
 import sys
 import time
 import getopt
@@ -66,29 +67,31 @@ def score(ch, method, properties, body):
     print("[In] chain: %s; service: %s \n" % (chain, service))
 
     # mock real time-consuming
-    time.sleep(2)
+    time.sleep(0.1)
 
-    body_str = body.decode()
-    body_dict = json.loads(body_str)
+    body_dict = ast.literal_eval(body)
     method_name = body_dict.get('method')
     parameter = body_dict.get('parameter')
     content = body_dict.get('content')
 
     # send message to next service
     if 'query_score' == method_name:
-        query_score()
+        query_score(body_dict)
 
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
     print("[Out] chain: %s; service: %s \n" % (chain, service))
 
 
-def query_score():
-    # message = '{"method": "query_score", "parameter": "user",' \
-    #               '"content": "user query score"}'
-    # next_service = "score"
-    # sender.send_message(message, chain, next_service)
-    print("send message to score \n")
+def query_score(body_dict):
+    # record time msec
+    t_start = int(time.time() * 1000)
+    message = {"uuid": body_dict.get("uuid"), "chain": chain, "gw_time": body_dict.get("gw_time"),
+               "books_time": body_dict.get("books_time"), "review_time": body_dict.get("review_time"),
+               "score_time": t_start}
+    next_service = "gw"
+    sender.send_message(str(message), chain, next_service)
+    print("return message to gw \n")
 
 
 if __name__ == "__main__":

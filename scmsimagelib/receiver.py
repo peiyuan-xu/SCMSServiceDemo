@@ -6,14 +6,16 @@
 @time: 2018/12/10 14:48
 @desc:
 """
+import pika
+
 from scmsimagelib import connection as conn
 
 
 def receive_message(chain, service, callback):
     queue = chain + "_" + service
 
-    pika_conn = conn.get_client()
-    channel = pika_conn.channel()
+    channel = conn.get_channel()
+
     channel.queue_declare(queue=queue)
     channel.basic_consume(callback,
                           queue=queue)

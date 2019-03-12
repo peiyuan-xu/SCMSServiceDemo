@@ -6,6 +6,8 @@
 @time: 2018/12/10 14:48
 @desc:
 """
+import pika
+
 from scmsimagelib import connection as conn
 
 
@@ -13,8 +15,7 @@ def send_message(message, chain, next_service):
     exchange = ''
     routing_key = chain + "_" + next_service
 
-    pika_conn = conn.get_client()
-    channel = pika_conn.channel()
+    channel = conn.get_channel()
 
     channel.queue_declare(queue=routing_key)
 

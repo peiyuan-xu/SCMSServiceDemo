@@ -16,6 +16,7 @@ _LOCK = threading.Lock()
 
 SERVER = None
 PIKA_CONN = None
+CHANNEL = None
 
 
 def init_client(server_ip):
@@ -36,8 +37,26 @@ def init_client(server_ip):
 
 
 def get_client(server_ip=SERVER):
-     global PIKA_CONN
-     if not PIKA_CONN or not PIKA_CONN.is_open:
-         init_client(server_ip)
+    global PIKA_CONN
+    if not PIKA_CONN or not PIKA_CONN.is_open:
+        init_client(server_ip)
 
-     return PIKA_CONN
+    return PIKA_CONN
+
+
+def get_channel():
+    global PIKA_CONN
+    global CHANNEL
+    global SERVER
+
+    if not PIKA_CONN or not PIKA_CONN.is_open:
+        init_client(SERVER)
+
+    if not CHANNEL or not CHANNEL.is_open:
+        try:
+            CHANNEL = PIKA_CONN.channel()
+        except pika.exceptions.ConnectionClosed:
+            init_client(SERVER)
+            CHANNEL = PIKA_CONN.channel()
+
+    return CHANNEL
