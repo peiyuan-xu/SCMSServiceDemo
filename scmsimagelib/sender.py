@@ -24,5 +24,5 @@ def send_message(message, chain, next_service):
                           body=message)
     # not close conn, remain a connection for all
 
-    print("[Send] chain: %s; nextService: %s; message: %s"
-          % (chain, next_service, message))
+    # print("[Send] chain: %s; nextService: %s; message: %s"
+    #       % (chain, next_service, message))

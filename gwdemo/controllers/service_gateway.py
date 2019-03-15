@@ -18,6 +18,7 @@ class ServiceGatewayController(object):
 
     @expose(template='json')
     def user_buy(self):
+        t_1 = time.time()
         # mock select the relative chain from db
         chain = 'chain1'
         next_service = 'books'
@@ -32,12 +33,16 @@ class ServiceGatewayController(object):
         message = {"uuid": id, "gw_time": t_start, "chain": chain, "method": "query_book",
                    "parameter": "user", "content": "user query books"}
         sender.send_message(str(message), chain, next_service)
+        t_2 = time.time()
+        t = str(t_2 - t_1)
+        print('[Time buy]: ' + str(t) + 's')
 
         return 'user query books success \n'
 
     @expose(template='json')
     def seller_statistics(self):
         # mock select the relative chain from db
+        t_1 = time.time()
         chain = 'chain2'
         next_service = 'books'
 
@@ -46,5 +51,9 @@ class ServiceGatewayController(object):
         message = {"uuid": id, "gw_time": t_start, "chain": chain, "method": "statistics_book",
                    "parameter": "seller", "content": "seller statistics books"}
         sender.send_message(str(message), chain, next_service)
+
+        t_2 = time.time()
+        t = str(t_2 - t_1)
+        print('[Time stat]: ' + str(t) + 's')
 
         return 'seller statistics books success \n'
