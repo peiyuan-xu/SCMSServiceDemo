@@ -64,7 +64,8 @@ def main(args):
 def reviews(ch, method, properties, body):
     global chain
     global service
-    print("[In] chain: %s; service: %s \n" % (chain, service))
+    t_in = time.time()
+    # print("[In] chain: %s; service: %s \n" % (chain, service))
 
     # mock real time-consuming
     time.sleep(0.2)
@@ -80,7 +81,9 @@ def reviews(ch, method, properties, body):
 
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
-    print("[Out] chain: %s; service: %s \n" % (chain, service))
+    # print("[Out] chain: %s; service: %s \n" % (chain, service))
+    t_out = time.time()
+    print("Reviews time:", str(t_out - t_in))
 
 
 def query_review(body_dict):
